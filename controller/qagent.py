@@ -22,22 +22,29 @@ class QAgent():
         self.eps_profile = EpsilonProfile(1, 0.1)
         self.epsilon = self.eps_profile.initial
 
-    def learn(self, env, n_episodes=1000, max_steps=200):
-        n_steps = np.zeros(n_episodes) + max_steps
-        for episode in range(n_episodes):
+    def learn(self, env, nbEpisodes=1000, maxSteps=200):
+        nbSteps = np.zeros(nbEpisodes) + maxSteps
+        
+        for episode in range(nbEpisodes):
             state = env.reset()
-            for step in range(max_steps):
+            
+            for step in range(maxSteps):
                 action = self.select_action(state)
                 next_state, reward, terminal = env.step(action)
+                
                 print(f"Episode {episode} - Step {step} - Action {action} - Reward {reward} - Terminal {terminal} - Epsilon {self.epsilon}")
                 self.updateQ(state, action, reward, next_state)
+                
                 if terminal:
-                    n_steps[episode] = step + 1  
+                    nbSteps[episode] = step + 1  
                     break
+                
                 state = next_state
-            self.epsilon = max(self.epsilon - self.eps_profile.dec_episode / (n_episodes - 1.), self.eps_profile.final)
-        print(f"Learning done with parameters : gamma={self.gamma}, alpha={self.alpha}, episodes={n_episodes}, max_steps={max_steps}")
-        unique_path = f"qtable_{self.gamma}_{self.alpha}_{n_episodes}_{max_steps}.npy"
+                
+            self.epsilon = max(self.epsilon - self.eps_profile.dec_episode / (nbEpisodes - 1.), self.eps_profile.final)
+            
+        print(f"Machine Learning done using the following parameters : gamma={self.gamma}, alpha={self.alpha}, episodes={nbEpisodes}, nbSteps={maxSteps}")
+        unique_path = f"qtable_{self.gamma}_{self.alpha}_{nbEpisodes}_{maxSteps}.npy"
         self.save(unique_path)
 
     def updateQ(self, state : tuple[int, int], action : int, reward : float, next_state : tuple[int, int]):
