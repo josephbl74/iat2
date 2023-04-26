@@ -59,11 +59,11 @@ class SpaceInvaders():
     def get_player_Y(self) -> int:
         return self.player_Y
 
-    def get_indavers_X(self) -> list[int]:
-        return self.invader_X
+    # def get_indavers_X(self) -> list[int]:
+    #     return self.invader_X
 
-    def get_indavers_Y(self) -> list[int]:
-        return self.invader_Y
+    # def get_indavers_Y(self) -> list[int]:
+    #     return self.invader_Y
 
     def get_bullet_X(self) -> int:
         return self.bullet_X
