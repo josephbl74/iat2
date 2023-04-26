@@ -82,17 +82,23 @@ class SpaceInvaders():
         return pygame.surfarray.array3d(self.screen)
 
     def get_state(self):
-        #On arrondi x au 16 ème supérieur
-        playerX = self._round_to(self.player_X, 20) #50 état possible 
-        invadersX = [self._round_to(x, 20) for x in self.invader_X]
-        invadersY = [self._round_to(y, 20) for y in self.invader_Y]
+        # On arrondi x au 16 ème supérieur
+        playerX = self._arrondir(self.player_X, 30) #50 état possible 
+        invadersX = [self._arrondir(x, 30) for x in self.invader_X]
+        invadersY = [self._arrondir(y, 30) for y in self.invader_Y]
+        bulletY = self._arrondir(self.bullet_Y, 30)
+        
+        # playerX = self._arrondir(self.get_player_X(), 20) #50 état possible 
+        # invadersX = [self._arrondir(x, 20) for x in self.get_indavers_X()]
+        # invadersY = [self._arrondir(y, 20) for y in self.get_indavers_Y()]
         
         invadersY[0] = 30 if invadersY[0] > 30 else invadersY[0]
         
         state = (
             playerX,
             invadersX[0],
-            invadersY[0]
+            invadersY[0],
+            bulletY
         )
         return state
 
@@ -235,5 +241,5 @@ class SpaceInvaders():
         distance = math.sqrt((math.pow(x1 - x2,2)) + (math.pow(y1 - y2,2)))
         return (distance <= 50)
     
-    def _round_to(self, x, base):
+    def _arrondir(self, x, base):
         return int(round(float(x)/base))
