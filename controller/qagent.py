@@ -54,8 +54,10 @@ class QAgent():
     def select_action(self, state : tuple[int, int]):
         if np.random.rand() < self.epsilon:
             action = np.random.randint(0, self.na)
+            
         else:
             action = self.select_greedy_action(state)
+            
         return action
 
     def select_greedy_action(self, state : tuple[int, int]):

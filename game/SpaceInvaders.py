@@ -59,11 +59,11 @@ class SpaceInvaders():
     def get_player_Y(self) -> int:
         return self.player_Y
 
-    # def get_indavers_X(self) -> list[int]:
-    #     return self.invader_X
+    def get_indavers_X(self) -> list[int]:
+        return self.invader_X
 
-    # def get_indavers_Y(self) -> list[int]:
-    #     return self.invader_Y
+    def get_indavers_Y(self) -> list[int]:
+        return self.invader_Y
 
     def get_bullet_X(self) -> int:
         return self.bullet_X
@@ -84,9 +84,12 @@ class SpaceInvaders():
     def get_state(self):
         # On arrondi x au 16 ème supérieur
         playerX = self._arrondir(self.player_X, 30) #50 état possible 
+        playerY = self._arrondir(self.player_Y, 30)
         invadersX = [self._arrondir(x, 30) for x in self.invader_X]
         invadersY = [self._arrondir(y, 30) for y in self.invader_Y]
+        bulletX = self._arrondir(self.bullet_X, 30)
         bulletY = self._arrondir(self.bullet_Y, 30)
+        bulletState = self.bullet_state
         
         # playerX = self._arrondir(self.get_player_X(), 20) #50 état possible 
         # invadersX = [self._arrondir(x, 20) for x in self.get_indavers_X()]
@@ -96,9 +99,12 @@ class SpaceInvaders():
         
         state = (
             playerX,
+            playerY,
             invadersX[0],
             invadersY[0],
-            bulletY
+            bulletX,
+            bulletY,
+            bulletState
         )
         return state
 
