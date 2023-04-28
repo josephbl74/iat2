@@ -101,12 +101,12 @@ class SpaceInvaders():
         
         state = (
             playerX,
-            playerY,
+            # playerY,
             invadersX[0],
-            invadersY[0],
-            bulletX,
-            bulletY,
-            bulletState
+            invadersY[0]
+            # bulletX,
+            # bulletY
+            # bulletState
         )
         return state
 

@@ -10,7 +10,7 @@ class EpsilonProfile:
 
 class QAgent():
     # def __init__(self, game: SpaceInvaders, gamma: float=1, alpha: float = 0.2):
-    def __init__(self, game: SpaceInvaders, gamma: float=1, alpha: float = 0.1):
+    def __init__(self, game: SpaceInvaders, gamma: float=0.2, alpha: float = 0.2):
         self.Q = np.zeros([41, 41, 31, game.na])
 
         self.game = game
@@ -23,7 +23,7 @@ class QAgent():
         self.eps_profile = EpsilonProfile(1, 0.1)
         self.epsilon = self.eps_profile.initial
 
-    def learn(self, env, nbEpisodes=50, maxSteps=1000):
+    def learn(self, env, nbEpisodes=50, maxSteps=50000):
         nbSteps = np.zeros(nbEpisodes) + maxSteps
         
         for episode in range(nbEpisodes):
@@ -33,7 +33,7 @@ class QAgent():
                 action = self.select_action(state)
                 next_state, reward, terminal = env.step(action)
                 
-                print(f"Episode {episode} - Step {step} - Action {action} - Reward {reward} - Terminal {terminal} - Epsilon {self.epsilon}")
+                # print(f"Episode {episode} - Step {step} - Action {action} - Reward {reward} - Terminal {terminal} - Epsilon {self.epsilon}")
                 self.updateQ(state, action, reward, next_state)
                 
                 if terminal:

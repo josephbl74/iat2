@@ -9,10 +9,10 @@ def main():
 
     game = SpaceInvaders(display=False)
     #controller = KeyboardController()
-    controller = RandomAgent(game.na)
-    # controller = QAgent(game, alpha=0.75)
-    # controller.learn(env=game, nbEpisodes=25, maxSteps=10000)
-    # controller.load("qtable_1_0.75_25_10000.npy")
+    # controller = RandomAgent(game.na)
+    controller = QAgent(game, alpha=0.8, gamma = 0.2)
+    controller.learn(env=game, nbEpisodes=50, maxSteps=10000)
+    controller.load("qtable_1_0.75_25_10000.npy")
     
     newGame = SpaceInvaders(display=True)
     state = newGame.reset()
@@ -23,8 +23,8 @@ def main():
             break
     print("Game over !")
     print("Score : ", newGame.score_val)
-    analyst = Analyst("qtable_1_0.75_25_10000.npy")
-    analyst.display()
+    # analyst = Analyst("qtable_1_0.75_25_10000.npy")
+    # analyst.display()
 
 if __name__ == '__main__' :
     main()
