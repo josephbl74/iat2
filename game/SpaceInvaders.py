@@ -19,7 +19,7 @@ def getURL(filename):
 
 class SpaceInvaders():
 
-    NO_INVADERS = 1 # Nombre d'aliens  
+    NO_INVADERS = 5 # Nombre d'aliens  
     
     def __init__(self, display : bool = False):
         # player
@@ -83,17 +83,19 @@ class SpaceInvaders():
 
     def get_state(self):
         # On arrondi x au 16 ème supérieur
-        playerX = self._arrondir(self.player_X, 30) #50 état possible 
-        playerY = self._arrondir(self.player_Y, 30)
+        # playerX = self._arrondir(self.player_X, 20) #50 état possible 
+        # invadersX = [self._arrondir(x, 20) for x in self.invader_X]
+        # invadersY = [self._arrondir(y, 20) for y in self.invader_Y]
+        
+        playerX = self._arrondir(self.player_X, 30)
+        playerY = self._arrondir(self.player_Y, 20)
         invadersX = [self._arrondir(x, 30) for x in self.invader_X]
-        invadersY = [self._arrondir(y, 30) for y in self.invader_Y]
+        invadersY = [self._arrondir(y, 20) for y in self.invader_Y]
         bulletX = self._arrondir(self.bullet_X, 30)
-        bulletY = self._arrondir(self.bullet_Y, 30)
+        bulletY = self._arrondir(self.bullet_Y, 20)
         bulletState = self.bullet_state
         
-        # playerX = self._arrondir(self.get_player_X(), 20) #50 état possible 
-        # invadersX = [self._arrondir(x, 20) for x in self.get_indavers_X()]
-        # invadersY = [self._arrondir(y, 20) for y in self.get_indavers_Y()]
+        
         
         invadersY[0] = 30 if invadersY[0] > 30 else invadersY[0]
         

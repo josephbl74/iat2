@@ -9,7 +9,8 @@ class EpsilonProfile:
         self.dec_step = dec_step        # amount of decrement of epsilon in each step
 
 class QAgent():
-    def __init__(self, game: SpaceInvaders, gamma: float=1, alpha: float = 0.2):
+    # def __init__(self, game: SpaceInvaders, gamma: float=1, alpha: float = 0.2):
+    def __init__(self, game: SpaceInvaders, gamma: float=1, alpha: float = 0.1):
         self.Q = np.zeros([41, 41, 31, game.na])
 
         self.game = game
@@ -22,7 +23,7 @@ class QAgent():
         self.eps_profile = EpsilonProfile(1, 0.1)
         self.epsilon = self.eps_profile.initial
 
-    def learn(self, env, nbEpisodes=1000, maxSteps=200):
+    def learn(self, env, nbEpisodes=50, maxSteps=1000):
         nbSteps = np.zeros(nbEpisodes) + maxSteps
         
         for episode in range(nbEpisodes):
@@ -48,8 +49,14 @@ class QAgent():
         self.save(unique_path)
 
     def updateQ(self, state : tuple[int, int], action : int, reward : float, next_state : tuple[int, int]):
-        new_q_value = (1 - self.alpha) * self.Q[state][action] + self.alpha * (reward + self.gamma * np.max(self.Q[next_state]))
-        self.Q[state][action] = new_q_value
+        # self.Q[state, action]+=self.alpha*(reward+self.gamma*np.max(self.Q[next_state, action])-self.Q[state, action])
+        self.Q[state][action]+=self.alpha*(reward+self.gamma*np.max(self.Q[next_state])-self.Q[state][action])
+
+        
+        # self.Q[state][action] = (1 - self.alpha) * self.Q[state][action] + self.alpha * (reward + self.gamma * np.max(self.Q[next_state]))
+
+        # self.Q[state][action] += self.alpha * (reward + self .gamma * np.max(self.Q[next_state]) - self.Q[state][action])
+        
 
     def select_action(self, state : tuple[int, int]):
         if np.random.rand() < self.epsilon:
