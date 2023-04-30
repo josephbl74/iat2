@@ -23,15 +23,20 @@ def main():
     while True:
         action = controller.select_action(state)
         state, reward, is_done = newGame.step(action)
-        timeCounter +=1
-        analyst.updateTandR(timeCounter, reward)
+        
+        # timeCounter +=1
+        # analyst.updateTandR(timeCounter, reward)
+        
+        
         
         if(is_done):
             break
     print("Game over !")
     print("Score : ", newGame.score_val)
     
-    #----POLITICS----
+    
+    
+    #----POLITICS ANALYSIS----
     
     """ 1. displaying Q """
     
@@ -45,7 +50,11 @@ def main():
     
     """ displaying R(t) """
     
-    analyst.displayR()
+    # analyst.displayR()
+    
+    """ displaying S(t) """
+    
+    # analyst.displayQS(controller.Time, controller.State)
     
     
 

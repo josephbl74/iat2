@@ -1,5 +1,6 @@
 import numpy as np
 from game.SpaceInvaders import SpaceInvaders
+from getQPolitics import Analyst
 
 class EpsilonProfile:
     def __init__(self, initial=1., final=0., dec_episode=1., dec_step=0.):
@@ -22,6 +23,10 @@ class QAgent():
 
         self.eps_profile = EpsilonProfile(1, 0.1)
         self.epsilon = self.eps_profile.initial
+        
+        self.learningCounter=0
+        self.Time=[0]
+        self.State=[[0,0,0,0]]
 
     def learn(self, env, nbEpisodes=50, maxSteps=50000):
         nbSteps = np.zeros(nbEpisodes) + maxSteps
@@ -57,6 +62,10 @@ class QAgent():
 
         # self.Q[state][action] += self.alpha * (reward + self .gamma * np.max(self.Q[next_state]) - self.Q[state][action])
         
+        # print(self.Q[state])
+        
+        # self.learningCounter+=1
+        # self.updateCandS(self.learningCounter, self.Q[state])
 
     def select_action(self, state : tuple[int, int]):
         if np.random.rand() < self.epsilon:
@@ -76,3 +85,7 @@ class QAgent():
     
     def load(self, path):
         self.Q = np.load(path)
+    
+    def updateCandS(self, time, state):
+        self.Time.append(time)
+        self.State.append(state)
