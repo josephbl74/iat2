@@ -7,32 +7,35 @@ from getQPolitics import Analyst
 
 def main():
 
-    game = SpaceInvaders(display=False)
+    game = SpaceInvaders(display=True)
     #controller = KeyboardController()
     # controller = RandomAgent(game.na)
     controller = QAgent(game, alpha=0.8, gamma = 0.2)
-    controller.learn(env=game, nbEpisodes=25, maxSteps=5000)
+    # def __init__(self, game, gamma, alpha):
+    # controller = RandomAgent(8, 12, 2, game.na, game) 
+    
+    controller.learn(episodes=50, iterations=5000)
     controller.load("qtable_1_0.75_25_10000.npy")
+    # controller.load("Q/0.2-0.8-50-5000.npy")
     
     analyst=Analyst()
     timeCounter=0
     
-    newGame = SpaceInvaders(display=True)
-    state = newGame.reset()
+    # newGame = SpaceInvaders(display=True)
+    state = game.reset()
 
     while True:
         action = controller.select_action(state)
-        state, reward, is_done = newGame.step(action)
+        state, reward, finished = game.step(action)
         
         # timeCounter +=1
         # analyst.updateTandR(timeCounter, reward)
         
         
         
-        if(is_done):
+        if(finished):
             break
-    print("Game over !")
-    print("Score : ", newGame.score_val)
+    print("GAME OVER > ", game.score_val)
     
     
     
