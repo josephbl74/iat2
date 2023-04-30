@@ -2,13 +2,6 @@ import numpy as np
 from game.SpaceInvaders import SpaceInvaders
 from getQPolitics import Analyst
 
-class EpsilonProfile:
-    def __init__(self, initial=1., final=0., dec_episode=1., dec_step=0.):
-        self.initial = initial          # initial epsilon in epsilon-greedy
-        self.final = final              # final epsilon in epsilon-greedy
-        self.dec_episode = dec_episode  # amount of decrement of epsilon in each episode is dec_episode / (number of episodes - 1)
-        self.dec_step = dec_step        # amount of decrement of epsilon in each step
-
 class QAgent():
     # def __init__(self, game: SpaceInvaders, gamma: float=1, alpha: float = 0.2):
     # def __init__(self, game: SpaceInvaders, gamma: float=0.2, alpha: float = 0.2):
@@ -24,8 +17,8 @@ class QAgent():
         self.Time=[0]
         self.State=[[0,0,0,0]]
         
-        self.eProfile = EpsilonProfile(1, 0.1)
-        self.epsilon = self.eProfile.initial
+        self.eProfile = Epsilon(1, 0.1)
+        self.epsilon = self.eProfile.init
 
     def learn(self, episodes, iterations):
         nbSteps = np.zeros(episodes) + iterations
@@ -46,7 +39,7 @@ class QAgent():
                 
                 state = next_state
                 
-            self.epsilon = max(self.epsilon - self.eProfile.dec_episode / (episodes - 1.), self.eProfile.final)
+            self.epsilon = max(self.epsilon - self.eProfile.episodeDim / (episodes - 1.), self.eProfile.end)
             
         # print(f"Machine Learning done using the following parameters : gamma={self.gamma}, alpha={self.alpha}, episodes={episodes}, nbSteps={iterations}")
         
@@ -92,3 +85,11 @@ class QAgent():
     def updateCandS(self, time, state):
         self.Time.append(time)
         self.State.append(state)
+        
+class Epsilon:
+    def __init__(self, initial=1., final=0., dec_episode=1., dec_step=0.):
+        self.episodeDim = dec_episode  # amount of decrement of epsilon in each episode is dec_episode / (number of episodes - 1)
+        self.stepDim = dec_step        # amount of decrement of epsilon in each step
+        self.init = initial          # initial epsilon in epsilon-greedy
+        self.end = final              # final epsilon in epsilon-greedy
+        
