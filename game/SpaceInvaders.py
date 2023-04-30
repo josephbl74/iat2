@@ -108,6 +108,9 @@ class SpaceInvaders():
             # bulletY
             # bulletState
         )
+        
+        # state = (pygame.surfarray.array3d(self.screen),)
+        
         return state
 
     def reset(self):
